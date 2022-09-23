@@ -54,7 +54,7 @@ class _ListaGrupoMuscularState extends State<ListaGrupoMuscular> {
                       grupo.nome.toString().substring(0, 1).toUpperCase(),
                     ),
                   ),
-                  title: Text(grupo.nome),
+                  title: Text(grupo.id.toString()),
                   trailing: Icon(Icons.arrow_forward_ios_outlined),
                 ),
               );
