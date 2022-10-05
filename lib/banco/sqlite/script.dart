@@ -6,14 +6,13 @@ final criarBanco = [
       peso DOUBLE NOT NULL,
       serie INT NOT NULL,
       repeticao INT NOT NULL,
-      grupoMuscular_id INTEGER NOT NULL,
-      FOREIGN KEY(grupoMuscular_id) REFERENCES grupoMuscular(id)
+      treino_id INTEGER NOT NULL,
+      FOREIGN KEY(treino_id) REFERENCES treino(id)
     )
   ''',
-  '''
-    CREATE TABLE grupoMuscular(
-      id INTEGER NOT NULL PRIMARY KEY,
-      nome TEXT NOT NULL
-    )
-  ''',
+  '''CREATE TABLE treino (
+          id INTEGER NOT NULL PRIMARY KEY,
+          ordem TEXT NOT NULL,
+          nome TEXT NOT NULL
+      )'''
 ];

@@ -1,5 +1,5 @@
-import 'package:cadastro_academia/banco/sqlite/conexao.dart'; 
-import 'package:cadastro_academia/banco/sqlite/grupoMuscular.dart';
+/*import 'package:cadastro_academia/banco/sqlite/conexao.dart'; 
+import 'package:cadastro_academia/banco/sqlite/treino.dart';
 import 'package:cadastro_academia/banco/dao/grupoMuscularDAO.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:path/path.dart';
@@ -59,4 +59,4 @@ void main() {
       expect(resultado, isInstanceOf<List<GrupoMuscular>>());
     });
   });
-}
+}*/

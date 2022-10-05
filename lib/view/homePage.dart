@@ -1,5 +1,5 @@
-import 'package:cadastro_academia/view/forms/form_grupoMuscular.dart';
-import 'package:cadastro_academia/view/list/list_grupoMuscular.dart';
+import 'package:cadastro_academia/view/forms/form_treino.dart';
+import 'package:cadastro_academia/view/list/list_treino.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -16,8 +16,8 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => MyHomePage(title: 'Cadastro treino'),
-        './formGrupoMuscular': (context) => GrupoMuscularForm(),
-        './listaGrupoMuscular': (context) => ListaGrupoMuscular()
+        './formTreino': (context) => TreinoForm(),
+        './listaTreino': (context) => ListaTreino()
       },
     );
   }

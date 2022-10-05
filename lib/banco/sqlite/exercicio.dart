@@ -1,4 +1,4 @@
-import 'package:cadastro_academia/banco/sqlite/grupoMuscular.dart';
+import 'package:cadastro_academia/banco/sqlite/treino.dart';
 
 class Exercicio {
   final dynamic id;
@@ -6,7 +6,7 @@ class Exercicio {
   final double peso;
   final int serie;
   final int repeticao;
-  final GrupoMuscular grupoMuscular;
+  final Treino treino;
 
   Exercicio(
       {this.id,
@@ -14,5 +14,5 @@ class Exercicio {
       required this.peso,
       required this.repeticao,
       required this.serie,
-      required this.grupoMuscular});
+      required this.treino});
 }

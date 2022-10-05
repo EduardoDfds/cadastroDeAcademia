@@ -1,20 +1,20 @@
-import 'package:cadastro_academia/banco/dao/grupoMuscularDAO.dart';
+import 'package:cadastro_academia/banco/dao/treinoDAO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../../banco/sqlite/grupoMuscular.dart';
+import '../../banco/sqlite/treino.dart';
 
-class ListaGrupoMuscular extends StatefulWidget {
-  const ListaGrupoMuscular({Key? key}) : super(key: key);
+class ListaTreino extends StatefulWidget {
+  const ListaTreino({Key? key}) : super(key: key);
 
   @override
-  State<ListaGrupoMuscular> createState() => _ListaGrupoMuscularState();
+  State<ListaTreino> createState() => _ListaTreinoState();
 }
 
-class _ListaGrupoMuscularState extends State<ListaGrupoMuscular> {
-  GrupoMuscularDAO grupoMuscularDAO = GrupoMuscularDAO();
+class _ListaTreinoState extends State<ListaTreino> {
+  TreinoDAO treinoDAO = TreinoDAO();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,17 +32,17 @@ class _ListaGrupoMuscularState extends State<ListaGrupoMuscular> {
         ],
       ),
       body: FutureBuilder(
-        future: grupoMuscularDAO.listarGrupoMuscular(),
-        builder: (context, AsyncSnapshot<List<GrupoMuscular>> dados) {
+        future: treinoDAO.listarTreino(),
+        builder: (context, AsyncSnapshot<List<Map<String, Object?>>> dados) {
           if (!dados.hasData) {
             return CircularProgressIndicator();
           }
-          var grupos = dados.data!;
+          var treinos = dados.data!;
 
           return ListView.builder(
-            itemCount: grupos.length,
+            itemCount: treinos.length,
             itemBuilder: (context, index) {
-              var grupo = grupos[index];
+              var treino = treinos[index];
 
               return Card(
                 elevation: 4,
@@ -51,10 +51,10 @@ class _ListaGrupoMuscularState extends State<ListaGrupoMuscular> {
                   leading: CircleAvatar(
                     backgroundColor: Colors.pinkAccent,
                     child: Text(
-                      grupo.nome.toString().substring(0, 1).toUpperCase(),
+                      treino['ordem'].toString().toUpperCase(),
                     ),
                   ),
-                  title: Text(grupo.id.toString()),
+                  title: Text(treino['nome'].toString()),
                   trailing: Icon(Icons.arrow_forward_ios_outlined),
                 ),
               );
