@@ -1,4 +1,4 @@
-import 'package:cadastro_academia/banco/sqlite/treino.dart';
+import 'package:cadastro_academia/banco/entities/treino.dart';
 
 class Exercicio {
   final dynamic id;

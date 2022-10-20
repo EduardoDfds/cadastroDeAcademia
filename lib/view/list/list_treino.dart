@@ -4,7 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../../banco/sqlite/treino.dart';
+import '../../banco/entities/treino.dart';
 
 class ListaTreino extends StatefulWidget {
   const ListaTreino({Key? key}) : super(key: key);
@@ -17,13 +17,18 @@ class _ListaTreinoState extends State<ListaTreino> {
   TreinoDAO treinoDAO = TreinoDAO();
   @override
   Widget build(BuildContext context) {
+    var argumento = ModalRoute.of(context)?.settings.arguments;
+    if (argumento != null) {
+      Map<String, Object?> treino = argumento as Map<String, Object?>;
+    }
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista Grupo Muscular'),
+        centerTitle: true,
+        title: const Text('Treinos'),
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, './formGrupoMuscular').then((value) {
+              Navigator.pushNamed(context, './formTreino').then((value) {
                 setState(() {});
               });
             },
@@ -33,9 +38,9 @@ class _ListaTreinoState extends State<ListaTreino> {
       ),
       body: FutureBuilder(
         future: treinoDAO.listarTreino(),
-        builder: (context, AsyncSnapshot<List<Map<String, Object?>>> dados) {
+        builder: (context, AsyncSnapshot<List<Treino>> dados) {
           if (!dados.hasData) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
           var treinos = dados.data!;
 
@@ -44,18 +49,27 @@ class _ListaTreinoState extends State<ListaTreino> {
             itemBuilder: (context, index) {
               var treino = treinos[index];
 
-              return Card(
-                elevation: 4,
-                margin: EdgeInsets.all(8),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Colors.pinkAccent,
-                    child: Text(
-                      treino['ordem'].toString().toUpperCase(),
+              return Center(
+                child: Card(
+                  elevation: 4,
+                  margin: const EdgeInsets.all(8),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.pinkAccent,
+                      child: Text(
+                        treino.ordem.toUpperCase(),
+                      ),
                     ),
+                    title: Text(treino.nome.toString()),
+                    trailing: IconButton(
+                        icon: const Icon(Icons.arrow_forward_ios_outlined),
+                        onPressed: () => Navigator.pushNamed(
+                                    context, './listaExercicio',
+                                    arguments: treino)
+                                .then((value) {
+                              setState(() {});
+                            })),
                   ),
-                  title: Text(treino['nome'].toString()),
-                  trailing: Icon(Icons.arrow_forward_ios_outlined),
                 ),
               );
             },

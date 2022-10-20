@@ -1,7 +1,7 @@
-import 'package:cadastro_academia/banco/sqlite/treino.dart';
+import 'package:cadastro_academia/banco/entities/treino.dart';
 import 'package:sqflite/sqflite.dart';
 import '../sqlite/conexao.dart';
-import '../sqlite/exercicio.dart';
+import '../entities/exercicio.dart';
 
 class ExercicioDAO {
   Future<bool> salvarExercicio(
@@ -9,7 +9,7 @@ class ExercicioDAO {
   ) async {
     Database db = await Conexao.abrirConexao();
     const sql =
-        'INSERT INTO exercicio (nome, peso, serie, repeticao, grupoMuscular_id) VALUES (?,?,?,?,?)';
+        'INSERT INTO exercicio (nome, peso, serie, repeticao, treino_id) VALUES (?,?,?,?,?)';
     var linhasAfetadas = await db.rawInsert(sql, [
       exercicio.nome,
       exercicio.peso,
@@ -22,7 +22,7 @@ class ExercicioDAO {
 
   Future<bool> alterarExercicio(Exercicio exercicio) async {
     const sql =
-        'UPDATE exercicio SET nome=?, peso=?, serie=?, repeticao=? WHERE id = ?';
+        'UPDATE exercicio SET nome=?, peso=?, serie=?, repeticao=? WHERE id_exercicio = ?';
     Database db = await Conexao.abrirConexao();
     var linhasAfetadas = await db.rawUpdate(sql, [
       exercicio.nome,
@@ -37,7 +37,7 @@ class ExercicioDAO {
   Future<bool> excluirExercicio(int id) async {
     late Database db;
     try {
-      const sql = 'DELETE FROM exercicio WHERE id = ?';
+      const sql = 'DELETE FROM exercicio WHERE id_exercicio = ?';
       db = await Conexao.abrirConexao();
       int linhasAfetadas = await db.rawDelete(sql, [id]);
       return linhasAfetadas > 0;
@@ -51,7 +51,7 @@ class ExercicioDAO {
   Future<Exercicio> consultarExercicio(int id) async {
     late Database db;
     try {
-      const sql = "SELECT * FROM exercicio WHERE id=?";
+      const sql = "SELECT * FROM exercicio WHERE id_exercicio =?";
       db = await Conexao.abrirConexao();
       Map<String, Object?> resultado = (await db.rawQuery(sql, [id])).first;
       if (resultado.isEmpty) throw Exception('Sem registros com este id');
@@ -83,5 +83,21 @@ class ExercicioDAO {
     } finally {
       db.close();
     }
+  }
+
+  @override
+  Future<List<Map<String, Object?>>> listarExerxixiosPorTreino(
+      int idTreino) async {
+    late Database db;
+    try {
+      const sql = 'SELECT * FROM exercicio WHERE treino_id =?';
+      db = await Conexao.abrirConexao();
+      List<Map<String, Object?>> resultado =
+          (await db.rawQuery(sql, [idTreino]));
+      return resultado;
+    } catch (e) {
+      throw Exception(
+          'classe ExercicioDAOSQLite, método listarExerxixiosPorTreino');
+    } finally {}
   }
 }

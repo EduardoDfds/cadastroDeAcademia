@@ -37,6 +37,9 @@ dependencies:
   sqflite: 
   path: 
   sqflite_common_ffi:
+  flutter_native_splash: ^2.0.4
+  flutter_launcher_icons: ^0.10.0
+  
 
 
 dev_dependencies:
