@@ -39,6 +39,9 @@ dependencies:
   sqflite_common_ffi:
   flutter_native_splash: ^2.0.4
   flutter_launcher_icons: ^0.10.0
+  video_player: ^2.4.7
+  
+
   
 
 
@@ -59,10 +62,13 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/intro.mp4
 
   # To add assets to your application, add an assets section, like this:
   # assets:
