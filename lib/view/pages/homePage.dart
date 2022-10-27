@@ -1,9 +1,11 @@
 import 'package:cadastro_academia/view/forms/form_exercicio.dart';
+import 'package:cadastro_academia/view/forms/form_login.dart';
 import 'package:cadastro_academia/view/list/list_exercicio.dart';
 import 'package:cadastro_academia/view/list/list_treino.dart';
+import 'package:cadastro_academia/view/pages/loginPage.dart';
 import 'package:flutter/material.dart';
 
-import 'forms/form_treino.dart';
+import '../forms/form_treino.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -18,7 +20,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: {
-        '/': (context) => const MyHomePage(title: 'Bem Vindo!'),
+        '/': (context) => const LoginPage(),
+        './homePage': (context) => const MyHomePage(title: 'Bem vindo!'),
+        './formLogin': (context) => const LoginForm(),
         './formTreino': (context) => const TreinoForm(),
         './listaTreino': (context) => const ListaTreino(),
         './formExercicio': (context) => const ExercicioForm(),
@@ -38,42 +42,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        /*actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, './listaTreino');
-            },
-            icon: Icon(Icons.add),
-          )
-        ],*/
+        backgroundColor: Colors.black,
         centerTitle: true,
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(children: [
-          Image.network(
-              'https://www.imagensempng.com.br/wp-content/uploads/2021/07/02-18.png'),
-          Container(
-              child: ElevatedButton.icon(
-            onPressed: () => Navigator.pushNamed(context, './listaTreino'),
-            label: Text('Lista de treinos', style: TextStyle(fontSize: 25)),
-            style: ElevatedButton.styleFrom(
-                primary: Colors.amber, shape: const StadiumBorder()),
-            icon: const Icon(Icons.list),
-          ))
-        ]),
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: Column(children: [
+            Container(
+              child: Image.asset("assets/imagemHome.png"),
+            ),
+            Container(
+                child: ElevatedButton.icon(
+              onPressed: () => Navigator.pushNamed(context, './listaTreino'),
+              label: Text('Lista de treinos', style: TextStyle(fontSize: 25)),
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.amber, shape: const StadiumBorder()),
+              icon: const Icon(Icons.list),
+            ))
+          ]),
+        ),
       ),
     );
   }

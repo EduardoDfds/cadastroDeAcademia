@@ -15,11 +15,16 @@ class CampoTexto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      keyboardType: tipo,
-      onChanged: vincularCampo,
-      decoration: InputDecoration(label: Text(rotulo)),
-      initialValue: valorInicial ??= '',
+    return SizedBox(
+      width: 300,
+      child: TextFormField(
+        keyboardType: tipo,
+        onChanged: vincularCampo,
+        decoration: InputDecoration(
+            label: Text(rotulo),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+        initialValue: valorInicial ??= '',
+      ),
     );
   }
 }

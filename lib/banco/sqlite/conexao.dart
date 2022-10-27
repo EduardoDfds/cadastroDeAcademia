@@ -8,6 +8,7 @@ class Conexao {
   static Future<Database> abrirConexao() async {
     if (_db == null) {
       String caminho = join(await getDatabasesPath(), 'banco.db');
+      deleteDatabase(caminho);
       _db = await openDatabase(
         caminho,
         version: 1,

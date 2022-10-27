@@ -15,6 +15,7 @@ class ListaTreino extends StatefulWidget {
 
 class _ListaTreinoState extends State<ListaTreino> {
   TreinoDAO treinoDAO = TreinoDAO();
+  Image imagemFundo = Image.asset("assets/imagemListTreino.png");
   @override
   Widget build(BuildContext context) {
     var argumento = ModalRoute.of(context)?.settings.arguments;
@@ -23,6 +24,7 @@ class _ListaTreinoState extends State<ListaTreino> {
     }
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         centerTitle: true,
         title: const Text('Treinos'),
         actions: [
@@ -36,45 +38,65 @@ class _ListaTreinoState extends State<ListaTreino> {
           )
         ],
       ),
-      body: FutureBuilder(
-        future: treinoDAO.listarTreino(),
-        builder: (context, AsyncSnapshot<List<Treino>> dados) {
-          if (!dados.hasData) {
-            return const CircularProgressIndicator();
-          }
-          var treinos = dados.data!;
+      body: Stack(
+        children: [
+          Container(
+            child: SizedBox.expand(
+                child: FittedBox(
+              fit: BoxFit.cover,
+              child: SizedBox(
+                width: imagemFundo.width,
+                height: imagemFundo.height,
+                child: imagemFundo,
+              ),
+            )),
+          ),
+          FutureBuilder(
+            future: treinoDAO.listarTreino(),
+            builder: (context, AsyncSnapshot<List<Treino>> dados) {
+              if (!dados.hasData) {
+                return const CircularProgressIndicator();
+              }
+              var treinos = dados.data!;
 
-          return ListView.builder(
-            itemCount: treinos.length,
-            itemBuilder: (context, index) {
-              var treino = treinos[index];
+              return ListView.builder(
+                itemCount: treinos.length,
+                itemBuilder: (context, index) {
+                  var treino = treinos[index];
 
-              return Center(
-                child: Card(
-                  elevation: 4,
-                  margin: const EdgeInsets.all(8),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.pinkAccent,
-                      child: Text(
-                        treino.ordem.toUpperCase(),
+                  return Center(
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      elevation: 4,
+                      margin: const EdgeInsets.all(8),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.black,
+                          child: Text(
+                            treino.ordem.toUpperCase(),
+                          ),
+                        ),
+                        title: Text(
+                          treino.nome.toString(),
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        trailing: IconButton(
+                            icon: const Icon(Icons.arrow_forward_ios_outlined),
+                            onPressed: () => Navigator.pushNamed(
+                                        context, './listaExercicio',
+                                        arguments: treino)
+                                    .then((value) {
+                                  setState(() {});
+                                })),
                       ),
                     ),
-                    title: Text(treino.nome.toString()),
-                    trailing: IconButton(
-                        icon: const Icon(Icons.arrow_forward_ios_outlined),
-                        onPressed: () => Navigator.pushNamed(
-                                    context, './listaExercicio',
-                                    arguments: treino)
-                                .then((value) {
-                              setState(() {});
-                            })),
-                  ),
-                ),
+                  );
+                },
               );
             },
-          );
-        },
+          )
+        ],
       ),
     );
   }

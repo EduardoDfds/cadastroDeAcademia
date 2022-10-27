@@ -16,12 +16,15 @@ class _ListaExercicioState extends State<ListaExercicio> {
 
   @override
   Widget build(BuildContext context) {
+    Image imagemFundo = Image.asset('assets/imagemExercice.png');
     var argumento = ModalRoute.of(context)?.settings.arguments;
     if (argumento != null) {
       treino = argumento as Treino;
     }
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.black,
         title: const Text('Exercicios'),
         actions: [
           IconButton(
@@ -34,35 +37,57 @@ class _ListaExercicioState extends State<ListaExercicio> {
           )
         ],
       ),
-      body: FutureBuilder(
-        future: exercicioDAO.listarExerxixiosPorTreino(treino.id),
-        builder: (context, AsyncSnapshot<List<Map<String, Object?>>> dados) {
-          if (!dados.hasData) {
-            return const CircularProgressIndicator();
-          }
-          var exercicios = dados.data!;
+      body: Stack(
+        children: [
+          Container(
+            child: SizedBox.expand(
+                child: FittedBox(
+              fit: BoxFit.cover,
+              child: SizedBox(
+                width: imagemFundo.width,
+                height: imagemFundo.height,
+                child: imagemFundo,
+              ),
+            )),
+          ),
+          FutureBuilder(
+            future: exercicioDAO.listarExerxixiosPorTreino(treino.id),
+            builder:
+                (context, AsyncSnapshot<List<Map<String, Object?>>> dados) {
+              if (!dados.hasData) {
+                return const CircularProgressIndicator();
+              }
+              var exercicios = dados.data!;
 
-          return ListView.builder(
-            itemCount: exercicios.length,
-            itemBuilder: (context, index) {
-              var exercicio = exercicios[index];
+              return ListView.builder(
+                itemCount: exercicios.length,
+                itemBuilder: (context, index) {
+                  var exercicio = exercicios[index];
 
-              return Center(
-                child: Card(
-                  elevation: 4,
-                  margin: const EdgeInsets.all(8),
-                  child: ListTile(
-                    title: Text(exercicio['nome'].toString()),
-                    subtitle: Text('''Peso: ${exercicio['peso'].toString()}\n
-                    Série: ${exercicio['serie']}/n
-                    Repetições: ${exercicio['repeticao']}/n
-                    '''),
-                  ),
-                ),
+                  return Center(
+                    child: Card(
+                      elevation: 4,
+                      margin: const EdgeInsets.all(8),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text(
+                              exercicio['nome'].toString(),
+                              style: TextStyle(fontSize: 30),
+                            ),
+                            subtitle: Text(
+                                '''Peso: ${exercicio['peso'].toString()} Kg\nSérie: ${exercicio['serie']}\nRepetições: ${exercicio['repeticao']}
+                        '''),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
               );
             },
-          );
-        },
+          )
+        ],
       ),
     );
   }

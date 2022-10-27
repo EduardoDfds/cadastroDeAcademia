@@ -1,5 +1,6 @@
 import 'package:cadastro_academia/banco/dao/treinoDAO.dart';
 import 'package:cadastro_academia/banco/entities/treino.dart';
+import 'package:cadastro_academia/view/components/criar_espaco.dart';
 
 import 'package:flutter/material.dart';
 
@@ -18,10 +19,16 @@ class _TreinoFormState extends State<TreinoForm> {
 
   Widget _criarCampo(String rotulo, String? dica,
       ValueChanged<String>? vincularValor, String? valorInicial) {
-    return TextFormField(
-      decoration: InputDecoration(label: Text(rotulo), hintText: dica),
-      onChanged: vincularValor,
-      initialValue: valorInicial ??= '',
+    return SizedBox(
+      width: 300,
+      child: TextFormField(
+        decoration: InputDecoration(
+            label: Text(rotulo),
+            hintText: dica,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+        onChanged: vincularValor,
+        initialValue: valorInicial ??= '',
+      ),
     );
   }
 
@@ -36,6 +43,9 @@ class _TreinoFormState extends State<TreinoForm> {
     }
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
+        centerTitle: true,
+        title: Text('Cadastro Treino'),
         actions: [
           IconButton(
               onPressed: () {
@@ -47,15 +57,35 @@ class _TreinoFormState extends State<TreinoForm> {
               icon: Icon(Icons.save))
         ],
       ),
-      body: Form(
-        child: Column(
-          children: [
-            _criarCampo('Nome', 'Digite o nome',
-                (valorDigitado) => nome = valorDigitado, nome),
-            _criarCampo('ordem', 'Digite a ordem',
-                (valorDigitado) => ordem = valorDigitado, ordem)
-          ],
-        ),
+      body: Stack(
+        children: [
+          Center(
+            child: Container(
+              child: Form(
+                child: Column(
+                  children: [
+                    Container(
+                      height: 50,
+                    ),
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _criarCampo('Nome', 'Digite o nome',
+                              (valorDigitado) => nome = valorDigitado, nome),
+                          const CriarEspaco(),
+                          _criarCampo('ordem', 'Digite a ordem',
+                              (valorDigitado) => ordem = valorDigitado, ordem),
+                          const CriarEspaco(),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -11,8 +11,16 @@ final criarBanco = [
     )
   ''',
   '''CREATE TABLE treino (
-          id_treino INTEGER NOT NULL PRIMARY KEY,
-          ordem TEXT NOT NULL,
-          nome TEXT NOT NULL
-      )'''
+      id_treino INTEGER NOT NULL PRIMARY KEY,
+      ordem TEXT NOT NULL,
+      nome TEXT NOT NULL
+      )
+  ''',
+  '''CREATE TABLE login (
+      id_login INTEGER NOT NULL PRIMARY KEY,
+      nome TEXT NOT NULL,
+      email TEXT NOT NULL,
+      senha TEXT NOT NULL
+    )
+  '''
 ];
