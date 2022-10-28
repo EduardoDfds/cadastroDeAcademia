@@ -12,7 +12,6 @@ void main() async {
     databaseFactory =
         databaseFactoryFfi; // permite fazer os testes sem precisar do android
     String caminho = join(await getDatabasesPath(), 'banco.db');
-    deleteDatabase(caminho);
     db = await Conexao.abrirConexao();
   });
 
@@ -21,7 +20,6 @@ void main() async {
   });
 
   group('teste de conexão', () {
-    
     test("testando se a conexão está aberta", () {
       expect(db.isOpen, true);
     });
@@ -30,7 +28,6 @@ void main() async {
       var resultado = await db.query('exercicio');
       expect(resultado.length, isInstanceOf<int>());
     });
-
 
     test('Testando a conexão na consulta da tabela grupoMuscular', () async {
       var resultado = await db.query('grupoMuscular');

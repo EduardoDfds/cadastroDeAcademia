@@ -74,10 +74,14 @@ class _ListaExercicioState extends State<ListaExercicio> {
                             title: Text(
                               exercicio['nome'].toString(),
                               style: TextStyle(fontSize: 30),
+                              textAlign: TextAlign.center,
                             ),
                             subtitle: Text(
-                                '''Peso: ${exercicio['peso'].toString()} Kg\nSérie: ${exercicio['serie']}\nRepetições: ${exercicio['repeticao']}
-                        '''),
+                              '''Peso: ${exercicio['peso'].toString()} Kg\nSérie: ${exercicio['serie']}\nRepetições: ${exercicio['repeticao']}
+                        ''',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 20),
+                            ),
                           )
                         ],
                       ),
